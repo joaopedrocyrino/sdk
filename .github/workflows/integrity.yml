@@ -1,0 +1,30 @@
+name: "Integrity"
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  integrity-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        env:
+          CYRINO_SDK_AUTH_TOKEN: ${{ secrets.CYRINO_SDK_AUTH_TOKEN }}
+        run: yarn install
+
+      - name: Build and test packages
+        env:
+          CYRINO_SDK_AUTH_TOKEN: ${{ secrets.CYRINO_SDK_AUTH_TOKEN }}
+        run: yarn test

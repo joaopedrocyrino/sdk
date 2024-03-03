@@ -1,0 +1,38 @@
+name: Deploy Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # node-version: [10.x, 12.x, 14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install
+      env:
+        CYRINO_SDK_AUTH_TOKEN: ${{ secrets.CYRINO_SDK_AUTH_TOKEN }}
+      run: yarn install
+
+    - name: Setup npm credentials
+      run: |
+        npm set @joaopedrocyrino:registry=https://npm.pkg.github.com
+        npm set "//npm.pkg.github.com/:_authToken=${{ secrets.CYRINO_SDK_AUTH_TOKEN }}"
+
+    - name: build, Test and Publish packages
+      env:
+        CYRINO_SDK_AUTH_TOKEN: ${{ secrets.CYRINO_SDK_AUTH_TOKEN }}
+      run: npx lerna publish from-package --yes

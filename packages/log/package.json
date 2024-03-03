@@ -1,0 +1,49 @@
+{
+  "name": "@joaopedrocyrino/log",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "main": "./dist/cjs.min.js",
+  "module": "./dist/es.min.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist/types/*",
+    "dist/es.min.js",
+    "dist/es.min.js.map",
+    "dist/cjs.min.js",
+    "dist/cjs.min.js.map"
+  ],
+  "author": "João Cyrino",
+  "homepage": "https://github.com/joaopedrocyrino/sdk/tree/main/packages/log",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaopedrocyrino/sdk.git",
+    "directory": "packages/log"
+  },
+  "scripts": {
+    "build": "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types' && npx webpack",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "clean": "rimraf ./dist",
+    "size": "size-limit"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@joaopedrocyrino"
+  },
+  "size-limit": [
+    {
+      "path": "dist/cjs.min.js",
+      "limit": "100 KB"
+    },
+    {
+      "path": "dist/cjs.min.js.map",
+      "limit": "250 KB"
+    }
+  ],
+  "devDependencies": {
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "sideEffect": false,
+  "gitHead": "f629e7209e28f7e3d14fad22b9314ac529e9ac48"
+}

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "strict": true,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    //  we do not need paths now bc we only use packages workspace. If we add more we use paths to better import them
+    // "paths": {},
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "target": "es6",
+    "useUnknownInCatchVariables": false,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "noEmitHelpers": true
+  },
+  "include": ["packages/", "webpack.common.js"],
+  "exclude": ["node_modules/", "**/*.spec.*", "**/*.test.*"]
+}
